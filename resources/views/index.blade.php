@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>{{ config('app.name') }} - Accueil</title>
+    <title>{{ config('app.name') }} - {{ __('messages.index.title') }}</title>
     @vite('resources/css/app.css')
 </head>
 <body>
@@ -17,7 +17,7 @@
     <section class="border-b-2 border-gray-200 bg-nav">
         <div class="p-5 flex flex-col items-center gap-4">
             <img src="assets/img/logo.png" class="">
-            <h1 class="text-6xl font-bold text-outline text-nav">PRENEZ SOIN DE VOTRE SANTÉ MENTALE</h1>
+            <h1 class="text-6xl font-bold text-outline text-nav">{{ __('messages.index.hero_main_text') }}</h1>
             <p class="w-2/6">CESIZen est une application destinée à la gestion du stress et la promotion du bien-être.
                 Explorez nos outils pour évaluer et améliorer votre santé mentale.</p>
             <div class="flex flex-row gap-4">

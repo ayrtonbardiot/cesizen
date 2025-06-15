@@ -57,7 +57,7 @@ class GenerateTestFiches extends Command
         ]);
         $pdf->setPaper('A4', 'portrait');
 
-        $output = $this->option('output') ?? "storage/fiches/FICHES-TESTS_{$filenameTimestamp}.pdf";
+        $output = $this->option('output') ?? "FICHES-TESTS_LAST.pdf";
         $output = base_path($output);
         File::ensureDirectoryExists(dirname($output));
         $pdf->save($output);

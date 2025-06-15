@@ -4,11 +4,8 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\View;
 use Barryvdh\DomPDF\Facade\Pdf;
-use SimpleXMLElement;
+use Symfony\Component\Process\Process;
 
 class GenerateTestFiches extends Command
 {
@@ -17,11 +14,29 @@ class GenerateTestFiches extends Command
 
     public function handle(): int
     {
-        $this->info('Exécution des tests PHPUnit...');
+        $this->info('Exécution des tests PHPUnit (via exec)...');
+
         $logPath = storage_path('logs/phpunit.junit.xml');
         File::ensureDirectoryExists(dirname($logPath));
 
-        $exitCode = Artisan::call('test', ['--log-junit' => $logPath]);
+        $process = new Process(
+            ['php', 'artisan', 'test', '--env=testing', '--log-junit=' . $logPath],
+            base_path(),
+            [
+                // simule environnement "testing"
+                'APP_ENV' => 'testing',
+                'APP_DEBUG' => 'true',
+                'SESSION_DRIVER' => 'array',
+                'SESSION_SECURE_COOKIE' => 'false',
+                'DB_CONNECTION' => 'sqlite',
+                'DB_DATABASE' => ':memory:',
+            ] + $_ENV 
+        );
+        $process->setTty(Process::isTtySupported()); // Active couleurs si dispo
+        $process->run(function ($type, $buffer) {
+            echo $buffer;
+        });
+        
         if (!File::exists($logPath)) {
             $this->error('Le fichier phpunit.junit.xml n\'a pas été généré.');
             return 1;
@@ -33,7 +48,6 @@ class GenerateTestFiches extends Command
         $this->info('Génération du PDF...');
 
         $generatedAt = now()->format('d/m/Y H:i:s');
-        $filenameTimestamp = now()->format('Ymd_His');
 
         $summary = [
             'fiche' => 'SOMMAIRE',
@@ -59,10 +73,15 @@ class GenerateTestFiches extends Command
 
         $output = $this->option('output') ?? "FICHES-TESTS_LAST.pdf";
         $output = base_path($output);
+
+        if (File::exists($output)) {
+            File::delete($output);
+        }
+
         File::ensureDirectoryExists(dirname($output));
         $pdf->save($output);
 
-        $this->info("Rapport généré : {$output}");
+        $this->info("PDF généré avec succès : {$output}");
         return 0;
     }
 
@@ -76,12 +95,10 @@ class GenerateTestFiches extends Command
             $method = (string) $case['name'];
             $key = "$class@$method";
 
-            $result = [
+            $results[$key] = [
                 'status' => isset($case->failure) ? 'Echec' : 'Succès',
                 'message' => isset($case->failure) ? (string) $case->failure : '',
             ];
-
-            $results[$key] = $result;
         }
 
         return $results;

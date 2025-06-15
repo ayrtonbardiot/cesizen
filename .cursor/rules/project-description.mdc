@@ -1,0 +1,19 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+This project is a mental health platform called CESIZen, built using Laravel 12 and TailwindCSS. It follows the MVC architecture. MySQL is used as the database.
+
+The codebase must comply with modern web standards (HTML5, CSS3), RGAA accessibility rules, and GDPR. Use HTTPS everywhere and hash passwords with Argon2. All sensitive data must be encrypted.
+
+Styling is done with TailwindCSS. Use semantic HTML and responsive design with a mobile-first approach. Typography includes Montserrat for titles and Open Sans for body text. The primary color is #ea7564.
+
+Modules include user accounts, diagnostic tools (based on Holmes and Rahe scale), breathing exercises (748, 55, 46 patterns), emotion tracking, and relaxation activities. At minimum, implement user accounts and informational pages.
+
+Follow clean code principles: organize controllers by domain, use Blade components, avoid inline styles, and comment complex logic.
+
+The tone should be inclusive and calming. The UI must feel friendly, minimalistic, and accessible to non-technical users.
+
+
+Target audience: general public, from teens to adults, including mental health professionals.

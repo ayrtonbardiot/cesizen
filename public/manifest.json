@@ -1,0 +1,28 @@
+{
+    "name": "CESIZen",
+    "short_name": "CZen",
+    "background_color": "#fceee2",
+    "theme_color": "#e1705b",
+    "display": "fullscreen",
+    "orientation": "portrait",
+    "status_bar": "black-translucent",
+    "description": "Application bien-\u00eatre de l'\u00e9quipe CESIZen \u2014 calme, respiration, diagnostic, \u00e9motions.",
+    "start_url": "/",
+    "icons": [
+        {
+            "src": "assets/img/icon-72x72.png",
+            "sizes": "72x72",
+            "type": "image/png"
+        },
+        {
+            "src": "assets/img/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "assets/img/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

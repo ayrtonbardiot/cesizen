@@ -132,6 +132,36 @@ return [
         'incorrect_credentials' => 'Identifiants incorrects. Veuillez réessayer.',
     ],
 
+    // Page de mot de passe oublié
+    'forgot_password' => [
+        'title' => 'Mot de passe oublié',
+        'subtitle' => 'Entrez votre adresse e-mail pour réinitialiser votre mot de passe',
+        'email' => 'Adresse e-mail',
+        'submit' => 'Envoyer le lien de réinitialisation',
+        'back_to_login' => 'Retour à la connexion',
+    ],
+
+    // Page de réinitialisation de mot de passe
+    'reset_password' => [
+        'title' => 'Réinitialiser le mot de passe',
+        'subtitle' => 'Choisissez un nouveau mot de passe',
+        'email' => 'Adresse e-mail',
+        'password' => 'Nouveau mot de passe',
+        'confirm_password' => 'Confirmer le nouveau mot de passe',
+        'submit' => 'Réinitialiser le mot de passe',
+        'back_to_login' => 'Retour à la connexion',
+        
+        // Email
+        'email_title' => 'Réinitialisez votre mot de passe',
+        'email_greeting' => 'Bonjour :name,',
+        'email_text' => 'Vous recevez cet email car nous avons reçu une demande de réinitialisation de mot de passe pour votre compte.',
+        'email_button' => 'Réinitialiser mon mot de passe',
+        'email_expiry' => 'Ce lien expirera dans :count minutes.',
+        'email_warning' => 'Si vous n\'avez pas demandé de réinitialisation de mot de passe, aucune action n\'est requise.',
+        'email_alternative' => 'Si le bouton ne fonctionne pas, vous pouvez copier et coller le lien suivant dans votre navigateur :',
+        'email_footer' => 'Si vous n\'avez pas demandé de réinitialisation de mot de passe, vous pouvez ignorer cet email en toute sécurité.',
+    ],
+
     // Page d'inscription
     'register' => [
         'title' => 'Inscription',
@@ -366,7 +396,6 @@ return [
             'deleted' => 'L\'exercice a été supprimé avec succès.',
         ],
         'exercises' => 'Exercices',
-        'settings' => 'Paramètres',
         'access_denied' => 'Accès refusé. Vous devez être administrateur pour accéder à cette page.',
         'total_users' => 'Total Utilisateurs',
         'total_exercises' => 'Total Exercices',
@@ -385,25 +414,6 @@ return [
             'users' => 'Utilisateurs',
             'exercises' => 'Exercices',
             'sessions' => 'Sessions',
-        ],
-        'settings' => [
-            'title' => 'Paramètres',
-            'general' => [
-                'title' => 'Paramètres généraux',
-                'site_name' => 'Nom du site',
-                'site_description' => 'Description du site',
-            ],
-            'contact' => [
-                'title' => 'Informations de contact',
-                'email' => 'Email de contact',
-                'phone' => 'Téléphone de contact',
-            ],
-            'maintenance' => [
-                'title' => 'Mode maintenance',
-                'mode' => 'Activer le mode maintenance',
-                'message' => 'Message de maintenance',
-            ],
-            'save' => 'Enregistrer les modifications',
         ],
         'common' => [
             'cancel' => 'Annuler',

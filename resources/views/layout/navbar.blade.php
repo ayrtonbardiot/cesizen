@@ -18,7 +18,7 @@
                         {{ __('messages.breathing.title') }}
                     </a>
                     @auth
-                    <a href="{{ route('profile') }}" class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('profile') ? 'bg-white text-gray-900' : '' }}">
+                    <a href="{{ route('profile.index') }}" class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('profile.index') ? 'bg-white text-gray-900' : '' }}">
                         {{ __('messages.profile.title') }}
                     </a>
                     @if(auth()->user()->isAdmin())
@@ -50,10 +50,10 @@
                 <a href="{{ route('dashboard') }}" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('dashboard') ? 'bg-nav text-gray-900' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50' }}">
                     {{ __('messages.dashboard.title') }}
                 </a>
-                <a href="{{ route('profile') }}" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('profile') ? 'bg-nav text-gray-900' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50' }}">
+                <a href="{{ route('profile.index') }}" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('profile.index') ? 'bg-nav text-gray-900' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50' }}">
                     {{ __('messages.profile.title') }}
                 </a>
-                <a href="{{ route('logout') }}" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('profile') ? 'bg-nav text-gray-900' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50' }}">
+                <a href="{{ route('logout') }}" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('profile.index') ? 'bg-nav text-gray-900' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50' }}">
                     {{ __('messages.auth.logout') }}
                 </a>
             </div>

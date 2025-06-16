@@ -13,8 +13,9 @@ class GenerateTestFiches extends Command
     protected $description = 'Génère un rapport PDF complet des fiches de tests avec les résultats.';
 
     public function handle(): int
-    {
-        $this->info('Exécution des tests PHPUnit (via exec)...');
+    {   
+        ini_set('memory_limit', '512M'); 
+        $this->info('Exécution des tests PHPUnit...');
 
         $logPath = storage_path('logs/phpunit.junit.xml');
         File::ensureDirectoryExists(dirname($logPath));

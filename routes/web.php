@@ -1,87 +1,101 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\{
-    LoginController,
     IndexController,
+    LoginController,
     RegisterController,
     DashboardController,
     ProfileController,
     BreathingExerciseController,
+    ForgotPasswordController,
+    ResetPasswordController
 };
 use App\Http\Controllers\Admin\{
-    BreathingExerciseController as AdminBreathingExerciseController,
     DashboardController as AdminDashboardController,
-    UserController as AdminUserController,
-    SettingsController as AdminSettingsController
+    BreathingExerciseController as AdminBreathingExerciseController,
+    UserController as AdminUserController
 };
 use App\Http\Controllers\Api\{
     BreathingSessionController as ApiBreathingSessionController
 };
-use Nette\NotImplementedException;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Http\Request;
+
+/*
+|--------------------------------------------------------------------------
+| Routes Web
+|--------------------------------------------------------------------------
+*/
 
 // Accueil
 Route::get('/', [IndexController::class, 'view'])->name('index');
 
-// Auth
+// Authentification
 Route::prefix('auth')->group(function () {
+    // Connexion
     Route::get('/login', [LoginController::class, 'view'])->name('login');
     Route::post('/login', [LoginController::class, 'login'])->name('login.post');
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+
+    // Inscription
+    Route::get('/register', [RegisterController::class, 'view'])->name('register');
+    Route::post('/register', [RegisterController::class, 'register'])->name('register.post');
+
+    // Mot de passe oublié
+    Route::get('/forgot-password', [ForgotPasswordController::class, 'view'])->name('password.request');
+    Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+
+    // Réinitialisation du mot de passe
+    Route::get('/reset-password/{token}', [ResetPasswordController::class, 'view'])->name('password.reset');
+    Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword'])->name('password.update');
 });
 
-// Inscription
-Route::get('/register', [RegisterController::class, 'view'])->name('register');
-Route::post('/register', [RegisterController::class, 'register'])->name('register.post');
-
-// Exercices de respiration (accessibles à tous)
+// Exercices de respiration (public)
 Route::get('/breathing', [BreathingExerciseController::class, 'index'])->name('breathing.index');
 Route::get('/breathing/{exercise}', [BreathingExerciseController::class, 'show'])->name('breathing.show');
 
-// Utilisateur connecté
+// Espace utilisateur (auth + email vérifié)
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'view'])->name('dashboard');
-    Route::get('/profile', [ProfileController::class, 'view'])->name('profile');
-    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
-    Route::get('/profile/download-data', [ProfileController::class, 'downloadPersonalData'])->name('profile.download-data');
-    Route::delete('/profile/delete', [ProfileController::class, 'deleteAccount'])->name('profile.delete');
+
+    Route::prefix('profile')->name('profile.')->group(function () {
+        Route::get('/', [ProfileController::class, 'view'])->name('index');
+        Route::put('/', [ProfileController::class, 'update'])->name('update');
+        Route::put('/password', [ProfileController::class, 'updatePassword'])->name('password');
+        Route::get('/download-data', [ProfileController::class, 'downloadPersonalData'])->name('download-data');
+        Route::delete('/delete', [ProfileController::class, 'deleteAccount'])->name('delete');
+    });
 });
 
-// Admin uniquement
+// Administration (auth + admin + email vérifié)
 Route::middleware(['auth', 'admin', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::resource('users', AdminUserController::class)->names('users');
     Route::resource('breathing', AdminBreathingExerciseController::class)->names('breathing');
-    Route::get('/settings', [AdminSettingsController::class, 'edit'])->name('settings');
-    Route::put('/settings', [AdminSettingsController::class, 'update'])->name('settings.update');
 });
 
+// Vérification de l'email
+Route::middleware('auth')->group(function () {
+    Route::get('/email/verify', fn() => view('auth.verify-email'))->name('verification.notice');
 
+    Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+        $request->fulfill();
+        return redirect('/dashboard');
+    })->middleware('signed')->name('verification.verify');
 
-// Routes pour la vérif email
-Route::get('/email/verify', function () {
-    return view('auth.verify-email');
-})->middleware('auth')->name('verification.notice');
+    Route::post('/email/verification-notification', function (Request $request) {
+        $request->user()->sendEmailVerificationNotification();
+        return back()->with('message', 'Le lien de vérification a été renvoyé.');
+    })->middleware('throttle:6,1')->name('verification.send');
+});
 
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill();
-    return redirect('/dashboard'); // Redirige après vérification
-})->middleware(['auth', 'signed'])->name('verification.verify');
-
-Route::post('/email/verification-notification', function (Request $request) {
-    $request->user()->sendEmailVerificationNotification();
-    return back()->with('message', 'Le lien de vérification a été renvoyé.');
-})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
-
-//TODO: bouger dans le fichier api.php
-// Routes pour l'API authentifiée
-Route::middleware(['auth:sanctum'])->group(function () {
-})->prefix('api');
-
-// Routes API non authentifiée
+// API publique
 Route::prefix('api')->group(function () {
     Route::post('/breathing/session', [ApiBreathingSessionController::class, 'store'])->name('breathing.session');
+});
+
+// TODO: déplacer dans routes/api.php si besoin
+Route::prefix('api')->middleware(['auth:sanctum'])->group(function () {
+    // Routes API protégées (à définir)
 });

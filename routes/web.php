@@ -12,13 +12,15 @@ use App\Http\Controllers\{
     BreathingExerciseController,
     ForgotPasswordController,
     ResetPasswordController,
-    ArticleController
+    ArticleController,
+    PageController
 };
 use App\Http\Controllers\Admin\{
     DashboardController as AdminDashboardController,
     BreathingExerciseController as AdminBreathingExerciseController,
     UserController as AdminUserController,
-    ArticleController as AdminArticleController
+    ArticleController as AdminArticleController,
+    PageController as AdminPageController
 };
 use App\Http\Controllers\Api\{
     BreathingSessionController as ApiBreathingSessionController
@@ -53,10 +55,6 @@ Route::prefix('auth')->group(function () {
     Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword'])->name('password.update');
 });
 
-// Exercices de respiration (public)
-Route::get('/breathing', [BreathingExerciseController::class, 'index'])->name('breathing.index');
-Route::get('/breathing/{exercise}', [BreathingExerciseController::class, 'show'])->name('breathing.show');
-
 // Espace utilisateur (auth + email vérifié)
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'view'])->name('dashboard');
@@ -78,6 +76,7 @@ Route::middleware(['auth', 'admin', 'verified'])->prefix('admin')->name('admin.'
     Route::resource('articles', AdminArticleController::class);
     Route::post('articles/{id}/restore', [AdminArticleController::class, 'restore'])->name('articles.restore');
     Route::delete('articles/{id}/force-delete', [AdminArticleController::class, 'forceDelete'])->name('articles.force-delete');
+    Route::resource('pages', AdminPageController::class);
 });
 
 // Vérification de l'email
@@ -108,3 +107,9 @@ Route::prefix('api')->middleware(['auth:sanctum'])->group(function () {
 // Routes pour les articles (public)
 Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
 Route::get('/articles/{article:slug}', [ArticleController::class, 'show'])->name('articles.show');
+// routes pages statiques public
+Route::get('/pages/{page}', [PageController::class, 'show'])->name('pages.show');
+
+// Exercices de respiration (public)
+Route::get('/breathing', [BreathingExerciseController::class, 'index'])->name('breathing.index');
+Route::get('/breathing/{exercise}', [BreathingExerciseController::class, 'show'])->name('breathing.show');

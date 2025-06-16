@@ -21,6 +21,9 @@
                 <a href="{{ route('admin.articles.index') }}" class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('admin.articles.*') ? 'bg-white text-gray-900' : '' }}">
                     {{ __('messages.admin.articles.title') }}
                 </a>
+                <a href="{{ route('admin.pages.index') }}" class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('admin.articles.*') ? 'bg-white text-gray-900' : '' }}">
+                    {{ __('messages.admin.pages.title') }}
+                </a>
                 <a href="{{ route('dashboard') }}" class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
                     {{ __('messages.navigation.back_to_site') }}
                 </a>

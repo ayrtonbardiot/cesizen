@@ -20,11 +20,12 @@ class DatabaseSeeder extends Seeder
             'email_verified_at' => now(),
             'role' => 'admin'
         ]);
-        // on seed articles, exercices & categories
+        // on seed articles, exercices & categories ainsi que les pages statiques
         $this->call([
             BreathingCategorySeeder::class,
             BreathingExerciseSeeder::class,
             ArticleSeeder::class,
+            StaticPagesSeeder::class
         ]);
     }
 }

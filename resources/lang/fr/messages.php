@@ -436,6 +436,9 @@ return [
             'restored' => 'L\'article a été restauré avec succès.',
             'force_deleted' => 'L\'article a été supprimé définitivement.',
         ],
+        'pages' => [
+            'title' => 'Gestion des pages'
+        ],
         'exercises' => 'Exercices',
         'access_denied' => 'Accès refusé. Vous devez être administrateur pour accéder à cette page.',
         'total_users' => 'Total Utilisateurs',

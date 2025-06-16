@@ -557,4 +557,47 @@ return [
             'select' => 'Sélectionner',
         ],
     ],
+
+    // Articles
+    'articles' => [
+        'title' => 'Articles',
+        'subtitle' => 'Nos articles sont disponibles gratuitement pour en apprendre plus sur la santé mentale et ses enjeux',
+        'read_more' => 'Lire la suite',
+        'no_articles' => 'Aucun article disponible pour le moment.',
+        'published_on' => 'Publié le',
+        'by' => 'par',
+        'back_to_articles' => 'Retour aux articles',
+        'view_all' => 'Voir tous les articles',
+        'management' => 'Gestion des articles',
+        'create' => 'Créer un article',
+        'edit' => 'Modifier l\'article',
+        'list' => 'Liste des articles',
+        'form' => [
+            'title' => 'Titre',
+            'content' => 'Contenu',
+            'author' => 'Auteur',
+            'image' => 'Image',
+            'is_published' => 'Publier l\'article',
+            'published_at' => 'Date de publication',
+            'submit' => 'Enregistrer',
+            'update' => 'Mettre à jour',
+            'delete' => 'Supprimer',
+            'delete_confirm' => 'Êtes-vous sûr de vouloir supprimer cet article ?',
+        ],
+        'messages' => [
+            'created' => 'Article créé avec succès.',
+            'updated' => 'Article mis à jour avec succès.',
+            'deleted' => 'Article supprimé avec succès.',
+        ],
+        'actions' => [
+            'create' => 'Créer un article',
+            'edit' => 'Modifier',
+            'delete' => 'Supprimer',
+            'view' => 'Voir',
+        ],
+        'status' => [
+            'published' => 'Publié',
+            'draft' => 'Brouillon',
+        ],
+    ],
 ];

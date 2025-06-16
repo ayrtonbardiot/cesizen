@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\BreathingExercise;
+use App\Models\Article;
 
 class IndexController extends Controller
 {
@@ -21,6 +22,11 @@ class IndexController extends Controller
             ->take(3)
             ->get();
 
-        return view('index', compact('breathingExercises'));
+        $articles = Article::where('is_published', true)
+            ->orderBy('published_at', 'desc')
+            ->take(3)
+            ->get();
+
+        return view('index', compact('breathingExercises', 'articles'));
     }
 }

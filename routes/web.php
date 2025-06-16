@@ -11,7 +11,8 @@ use App\Http\Controllers\{
     ProfileController,
     BreathingExerciseController,
     ForgotPasswordController,
-    ResetPasswordController
+    ResetPasswordController,
+    ArticleController
 };
 use App\Http\Controllers\Admin\{
     DashboardController as AdminDashboardController,
@@ -73,6 +74,9 @@ Route::middleware(['auth', 'admin', 'verified'])->prefix('admin')->name('admin.'
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::resource('users', AdminUserController::class)->names('users');
     Route::resource('breathing', AdminBreathingExerciseController::class)->names('breathing');
+    Route::resource('articles', ArticleController::class);
+    Route::post('articles/{id}/restore', [ArticleController::class, 'restore'])->name('articles.restore');
+    Route::delete('articles/{id}/force-delete', [ArticleController::class, 'forceDelete'])->name('articles.force-delete');
 });
 
 // Vérification de l'email
@@ -99,3 +103,7 @@ Route::prefix('api')->group(function () {
 Route::prefix('api')->middleware(['auth:sanctum'])->group(function () {
     // Routes API protégées (à définir)
 });
+
+// Routes pour les articles (public)
+Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
+Route::get('/articles/{article:slug}', [ArticleController::class, 'show'])->name('articles.show');

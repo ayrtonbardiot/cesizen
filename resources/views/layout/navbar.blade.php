@@ -14,7 +14,10 @@
                         {{ __('messages.dashboard.title') }}
                     </a>
                     @endauth
-                    <a href="{{ route('breathing.index') }}" class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs(['breathing.index', 'breathing.show']) ? 'bg-white text-gray-900' : '' }}">
+                    <a href="{{ route('articles.index') }}" class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('articles.*') ? 'bg-white text-gray-900' : '' }}">
+                        {{ __('messages.articles.title') }}
+                    </a>
+                    <a href="{{ route('breathing.index') }}" class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('breathing.*') ? 'bg-white text-gray-900' : '' }}">
                         {{ __('messages.breathing.title') }}
                     </a>
                     @auth

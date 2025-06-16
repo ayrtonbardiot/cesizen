@@ -17,7 +17,8 @@ use App\Http\Controllers\{
 use App\Http\Controllers\Admin\{
     DashboardController as AdminDashboardController,
     BreathingExerciseController as AdminBreathingExerciseController,
-    UserController as AdminUserController
+    UserController as AdminUserController,
+    ArticleController as AdminArticleController
 };
 use App\Http\Controllers\Api\{
     BreathingSessionController as ApiBreathingSessionController
@@ -74,9 +75,9 @@ Route::middleware(['auth', 'admin', 'verified'])->prefix('admin')->name('admin.'
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::resource('users', AdminUserController::class)->names('users');
     Route::resource('breathing', AdminBreathingExerciseController::class)->names('breathing');
-    Route::resource('articles', ArticleController::class);
-    Route::post('articles/{id}/restore', [ArticleController::class, 'restore'])->name('articles.restore');
-    Route::delete('articles/{id}/force-delete', [ArticleController::class, 'forceDelete'])->name('articles.force-delete');
+    Route::resource('articles', AdminArticleController::class);
+    Route::post('articles/{id}/restore', [AdminArticleController::class, 'restore'])->name('articles.restore');
+    Route::delete('articles/{id}/force-delete', [AdminArticleController::class, 'forceDelete'])->name('articles.force-delete');
 });
 
 // Vérification de l'email

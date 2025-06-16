@@ -27,40 +27,5 @@
         </div>
     </div>
 
-    <!-- Activité récente -->
-    <div class="mt-8">
-        <h2 class="text-xl font-semibold text-gray-900 mb-4">{{ __('messages.admin.recent_activity') }}</h2>
-        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-            <div class="p-6">
-                @if(isset($recentActivities) && count($recentActivities) > 0)
-                    <div class="space-y-4">
-                        @foreach($recentActivities as $activity)
-                            <div class="flex items-center space-x-4">
-                                <div class="flex-shrink-0">
-                                    <span class="inline-flex items-center justify-center h-8 w-8 rounded-full bg-indigo-100">
-                                        <span class="text-sm font-medium leading-none text-indigo-600">
-                                            {{ $activity->user ? substr($activity->user->name, 0, 1) : 'A' }}
-                                        </span>
-                                    </span>
-                                </div>
-                                <div class="flex-1 min-w-0">
-                                    <p class="text-sm font-medium text-gray-900 truncate">
-                                        {{ $activity->user ? $activity->user->name : __('messages.admin.anonymous_user') }}
-                                    </p>
-                                    <p class="text-sm text-gray-500">
-                                        {{ $activity->description }}
-                                    </p>
-                                </div>
-                                <div class="text-sm text-gray-500">
-                                    {{ $activity->created_at->diffForHumans() }}
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                @else
-                    <p class="text-gray-500">{{ __('messages.admin.no_recent_activity') }}</p>
-                @endif
-            </div>
-        </div>
-    </div>
+    <!-- todo: compléter avec activités récentes sur l'admin?-->
 @endsection 

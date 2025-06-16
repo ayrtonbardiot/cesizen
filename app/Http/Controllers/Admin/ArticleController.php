@@ -12,11 +12,29 @@ class ArticleController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $articles = Article::withTrashed()
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
+        $query = Article::query();
+
+        if ($request->filled('search')) {
+            $search = $request->get('search');
+            $query->where(function($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('content', 'like', "%{$search}%")
+                  ->orWhere('author', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('status')) {
+            $status = $request->get('status');
+            if ($status === 'published') {
+                $query->where('is_published', true);
+            } elseif ($status === 'draft') {
+                $query->where('is_published', false);
+            }
+        }
+
+        $articles = $query->latest()->paginate(10);
             
         return view('admin.articles.index', compact('articles'));
     }
@@ -52,15 +70,15 @@ class ArticleController extends Controller
         Article::create($validated);
 
         return redirect()->route('admin.articles.index')
-            ->with('success', 'Article créé avec succès.');
+            ->with('success', __('messages.admin.articles.created'));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Article $article)
     {
-        //
+        return view('admin.articles.show', compact('article'));
     }
 
     /**
@@ -94,7 +112,7 @@ class ArticleController extends Controller
         $article->update($validated);
 
         return redirect()->route('admin.articles.index')
-            ->with('success', 'Article mis à jour avec succès.');
+            ->with('success', __('messages.admin.articles.updated'));
     }
 
     /**
@@ -105,7 +123,7 @@ class ArticleController extends Controller
         $article->delete();
 
         return redirect()->route('admin.articles.index')
-            ->with('success', 'Article supprimé avec succès.');
+            ->with('success', __('messages.admin.articles.deleted'));
     }
 
     public function restore($id)
@@ -114,7 +132,7 @@ class ArticleController extends Controller
         $article->restore();
 
         return redirect()->route('admin.articles.index')
-            ->with('success', 'Article restauré avec succès.');
+            ->with('success', __('messages.admin.articles.restored'));
     }
 
     public function forceDelete($id)
@@ -123,6 +141,6 @@ class ArticleController extends Controller
         $article->forceDelete();
 
         return redirect()->route('admin.articles.index')
-            ->with('success', 'Article supprimé définitivement.');
+            ->with('success', __('messages.admin.articles.force_deleted'));
     }
 }

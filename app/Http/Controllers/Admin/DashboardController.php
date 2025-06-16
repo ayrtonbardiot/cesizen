@@ -16,13 +16,10 @@ class DashboardController extends Controller
         $totalExercises = BreathingExercise::count();
         $totalSessions = BreathingSession::count();
 
-        $recentActivities = BreathingSession::take(10)->get();
-
         return view('admin.dashboard', compact(
             'totalUsers',
             'totalExercises',
-            'totalSessions',
-            'recentActivities'
+            'totalSessions'
         ));
     }
 } 

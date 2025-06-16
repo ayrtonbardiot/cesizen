@@ -46,104 +46,7 @@
             </div>
         </section>
 
-        <!-- Section Exercices de respiration -->
-        <section class="py-12 sm:py-16 lg:py-20 bg-white">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12" data-aos="fade-up">
-                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">{{ __('messages.breathing.title') }}</h2>
-                    <p class="text-lg sm:text-xl text-gray-700 max-w-2xl mx-auto">{{ __('messages.breathing.subtitle') }}</p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    @foreach($breathingExercises as $exercise)
-                        <div class="bg-nav rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-200" data-aos="fade-up" data-aos-delay="{{ $loop->iteration * 100 }}">
-                            @if($exercise->image_path)
-                                <img src="{{ asset('storage/' . $exercise->image_path) }}" alt="{{ $exercise->title }}" class="w-full h-48 object-cover">
-                            @endif
-                            <div class="p-6">
-                                <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ $exercise->title }}</h3>
-                                <p class="text-gray-700 mb-4">{{ Str::limit($exercise->description, 100) }}</p>
-                                <div class="flex items-center justify-between">
-                                    <span class="px-3 py-1 text-sm rounded-full bg-gray-900/10 text-gray-900">
-                                        {{ $exercise->category->name }}
-                                    </span>
-                                    <a href="{{ route('breathing.show', $exercise) }}" class="bg-gray-900 text-nav px-6 py-3 rounded-xl font-medium hover:bg-gray-800 transition-colors duration-200">
-                                        {{ __('messages.breathing.exercise.start') }}
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-
-                <div class="text-center mt-12" data-aos="fade-up">
-                    <a href="{{ route('breathing.index') }}" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-white bg-gray-900 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
-                        {{ __('messages.breathing.exercise.view_all') }}
-                        <svg class="ml-2 -mr-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Séparateur -->
-        <div class="relative py-12">
-            <div class="absolute inset-0 flex items-center" aria-hidden="true">
-                <div class="w-full border-t border-gray-200"></div>
-            </div>
-            <div class="relative flex justify-center">
-                <span class="bg-white px-4 text-gray-500">
-                    <svg class="h-8 w-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                    </svg>
-                </span>
-            </div>
-        </div>
-
-        <!-- Section témoignages -->
-        <section class="py-12 sm:py-16 lg:py-20 bg-white">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-center mb-8 sm:mb-12 lg:mb-16 text-gray-900" data-aos="fade-up">
-                    {{ __('messages.index.testimonials.title') }}
-                </h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-                    <div class="bg-nav rounded-2xl p-6 sm:p-8 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="100">
-                        <div class="flex flex-col items-center">
-                            <img class="w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 rounded-full object-cover mb-4 sm:mb-6 ring-4 ring-white" src="assets/img/logo_alt.png" alt="{{ __('messages.index.testimonials.testimonial_1.name') }}">
-                            <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4">{{ __('messages.index.testimonials.testimonial_1.name') }}</h3>
-                            <p class="text-sm sm:text-base text-gray-700 text-center leading-relaxed">{{ __('messages.index.testimonials.testimonial_1.text') }}</p>
-                        </div>
-                    </div>
-                    <div class="bg-nav rounded-2xl p-6 sm:p-8 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="200">
-                        <div class="flex flex-col items-center">
-                            <img class="w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 rounded-full object-cover mb-4 sm:mb-6 ring-4 ring-white" src="assets/img/logo_alt.png" alt="{{ __('messages.index.testimonials.testimonial_2.name') }}">
-                            <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4">{{ __('messages.index.testimonials.testimonial_2.name') }}</h3>
-                            <p class="text-sm sm:text-base text-gray-700 text-center leading-relaxed">{{ __('messages.index.testimonials.testimonial_2.text') }}</p>
-                        </div>
-                    </div>
-                    <div class="bg-nav rounded-2xl p-6 sm:p-8 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="300">
-                        <div class="flex flex-col items-center">
-                            <img class="w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 rounded-full object-cover mb-4 sm:mb-6 ring-4 ring-white" src="assets/img/logo_alt.png" alt="{{ __('messages.index.testimonials.testimonial_3.name') }}">
-                            <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4">{{ __('messages.index.testimonials.testimonial_3.name') }}</h3>
-                            <p class="text-sm sm:text-base text-gray-700 text-center leading-relaxed">{{ __('messages.index.testimonials.testimonial_3.text') }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section CTA -->
-        <section class="py-12 sm:py-16 lg:py-20 bg-nav">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center" data-aos="fade-up">
-                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">{{ __('messages.index.cta.title') }}</h2>
-                <p class="text-lg sm:text-xl text-gray-700 max-w-xs sm:max-w-md lg:max-w-2xl mx-auto px-4">{{ __('messages.index.cta.subtitle') }}</p>
-                <a href="{{ route('register') }}" 
-                   class="inline-block mt-8 bg-gray-900 text-nav px-8 py-4 rounded-full font-bold hover:bg-gray-800 transition-all duration-300 transform hover:scale-105 shadow-lg">
-                    {{ __('messages.index.cta.button') }}
-                </a>
-            </div>
-        </section>
+        
 
         <!-- Articles Section -->
         <section class="py-16 bg-gray-50">
@@ -199,6 +102,102 @@
                         </svg>
                     </a>
                 </div>
+            </div>
+        </section>
+
+        <!-- Section Exercices de respiration -->
+        <section class="py-12 sm:py-16 lg:py-20 bg-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12" data-aos="fade-up">
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">{{ __('messages.breathing.title') }}</h2>
+                    <p class="text-lg sm:text-xl text-gray-700 max-w-2xl mx-auto">{{ __('messages.breathing.subtitle') }}</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    @foreach($breathingExercises as $exercise)
+                        <div class="bg-nav rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-200" data-aos="fade-up" data-aos-delay="{{ $loop->iteration * 100 }}">
+                            @if($exercise->image_path)
+                                <img src="{{ asset('storage/' . $exercise->image_path) }}" alt="{{ $exercise->title }}" class="w-full h-48 object-cover">
+                            @endif
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ $exercise->title }}</h3>
+                                <p class="text-gray-700 mb-4">{{ Str::limit($exercise->description, 100) }}</p>
+                                <div class="flex items-center justify-between">
+                                    <span class="px-3 py-1 text-sm rounded-full bg-gray-900/10 text-gray-900">
+                                        {{ $exercise->category->name }}
+                                    </span>
+                                    <a href="{{ route('breathing.show', $exercise) }}" class="bg-gray-900 text-nav px-6 py-3 rounded-xl font-medium hover:bg-gray-800 transition-colors duration-200">
+                                        {{ __('messages.breathing.exercise.start') }}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+                <div class="text-center mt-12" data-aos="fade-up">
+                    <a href="{{ route('breathing.index') }}" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-white bg-gray-900 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                        {{ __('messages.breathing.exercise.view_all') }}
+                        <svg class="ml-2 -mr-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Séparateur -->
+        <div class="relative py-12">
+            <div class="relative flex justify-center">
+                <span class="px-4 text-gray-500">
+                    <svg class="h-8 w-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                    </svg>
+                </span>
+            </div>
+        </div>
+
+        <!-- Section témoignages -->
+        <section class="py-12 sm:py-16 lg:py-20 bg-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-center mb-8 sm:mb-12 lg:mb-16 text-gray-900" data-aos="fade-up">
+                    {{ __('messages.index.testimonials.title') }}
+                </h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                    <div class="bg-nav rounded-2xl p-6 sm:p-8 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="100">
+                        <div class="flex flex-col items-center">
+                            <img class="w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 rounded-full object-cover mb-4 sm:mb-6 ring-4 ring-white" src="assets/img/logo_alt.png" alt="{{ __('messages.index.testimonials.testimonial_1.name') }}">
+                            <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4">{{ __('messages.index.testimonials.testimonial_1.name') }}</h3>
+                            <p class="text-sm sm:text-base text-gray-700 text-center leading-relaxed">{{ __('messages.index.testimonials.testimonial_1.text') }}</p>
+                        </div>
+                    </div>
+                    <div class="bg-nav rounded-2xl p-6 sm:p-8 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="200">
+                        <div class="flex flex-col items-center">
+                            <img class="w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 rounded-full object-cover mb-4 sm:mb-6 ring-4 ring-white" src="assets/img/logo_alt.png" alt="{{ __('messages.index.testimonials.testimonial_2.name') }}">
+                            <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4">{{ __('messages.index.testimonials.testimonial_2.name') }}</h3>
+                            <p class="text-sm sm:text-base text-gray-700 text-center leading-relaxed">{{ __('messages.index.testimonials.testimonial_2.text') }}</p>
+                        </div>
+                    </div>
+                    <div class="bg-nav rounded-2xl p-6 sm:p-8 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="300">
+                        <div class="flex flex-col items-center">
+                            <img class="w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 rounded-full object-cover mb-4 sm:mb-6 ring-4 ring-white" src="assets/img/logo_alt.png" alt="{{ __('messages.index.testimonials.testimonial_3.name') }}">
+                            <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4">{{ __('messages.index.testimonials.testimonial_3.name') }}</h3>
+                            <p class="text-sm sm:text-base text-gray-700 text-center leading-relaxed">{{ __('messages.index.testimonials.testimonial_3.text') }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section CTA -->
+        <section class="py-12 sm:py-16 lg:py-20 bg-nav">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center" data-aos="fade-up">
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">{{ __('messages.index.cta.title') }}</h2>
+                <p class="text-lg sm:text-xl text-gray-700 max-w-xs sm:max-w-md lg:max-w-2xl mx-auto px-4">{{ __('messages.index.cta.subtitle') }}</p>
+                <a href="{{ route('register') }}" 
+                   class="inline-block mt-8 bg-gray-900 text-nav px-8 py-4 rounded-full font-bold hover:bg-gray-800 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    {{ __('messages.index.cta.button') }}
+                </a>
             </div>
         </section>
     </main>

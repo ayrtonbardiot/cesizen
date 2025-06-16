@@ -51,6 +51,7 @@ return [
         'name' => 'Nom',
         'already_registered' => 'Déjà inscrit ?',
         'not_registered' => 'Pas encore inscrit ?',
+        'login_successful' => 'Connexion réussie !'
     ],
 
     // Dashboard
@@ -394,6 +395,46 @@ return [
             'created' => 'L\'exercice a été créé avec succès.',
             'updated' => 'L\'exercice a été mis à jour avec succès.',
             'deleted' => 'L\'exercice a été supprimé avec succès.',
+        ],
+        'articles' => [
+            'title' => 'Gestion des articles',
+            'subtitle' => 'Gérez les articles de votre application',
+            'search' => [
+                'placeholder' => 'Rechercher un article...',
+                'all_status' => 'Tous les statuts',
+                'filter' => 'Filtrer',
+            ],
+            'table' => [
+                'title' => 'Titre',
+                'author' => 'Auteur',
+                'published_at' => 'Publié le',
+                'status' => 'Statut',
+                'actions' => 'Actions',
+                'no_articles' => 'Aucun article trouvé',
+            ],
+            'form' => [
+                'title' => 'Titre',
+                'content' => 'Contenu',
+                'image' => 'Image',
+                'author' => 'Auteur',
+                'is_published' => 'Publié',
+            ],
+            'status' => [
+                'published' => 'Publié',
+                'draft' => 'Brouillon',
+            ],
+            'actions' => [
+                'create' => 'Créer un article',
+                'edit' => 'Modifier',
+                'delete' => 'Supprimer',
+                'delete_confirm' => 'Êtes-vous sûr de vouloir supprimer cet article ?',
+                'back_to_list' => 'Retour à la liste',
+            ],
+            'created' => 'L\'article a été créé avec succès.',
+            'updated' => 'L\'article a été mis à jour avec succès.',
+            'deleted' => 'L\'article a été supprimé avec succès.',
+            'restored' => 'L\'article a été restauré avec succès.',
+            'force_deleted' => 'L\'article a été supprimé définitivement.',
         ],
         'exercises' => 'Exercices',
         'access_denied' => 'Accès refusé. Vous devez être administrateur pour accéder à cette page.',

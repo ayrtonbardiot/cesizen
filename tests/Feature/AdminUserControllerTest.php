@@ -63,6 +63,7 @@ class AdminUserControllerTest extends TestCase
             'role' => 'utilisateur',
             '_token' => csrf_token(),
         ];
+        
         $response = $this->actingAs($admin)
             ->post(route('admin.users.store'), $data);
         $response->assertRedirect(route('admin.users.index'));

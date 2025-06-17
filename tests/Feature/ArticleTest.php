@@ -49,7 +49,7 @@ class ArticleTest extends TestCase
                 ->assertViewIs('articles.show')
                 ->assertViewHas('article')
                 ->assertSee($article->title)
-                ->assertSee($article->content);
+                ->assertSeeHtml($article->content);
     }
 
     /**

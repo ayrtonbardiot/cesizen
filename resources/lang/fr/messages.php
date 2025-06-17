@@ -312,6 +312,9 @@ return [
         'users' => [
             'title' => 'Gestion des utilisateurs',
             'subtitle' => 'Gérez les utilisateurs de votre application',
+            'created' => 'Utilisateur créé !',
+            'updated' => 'Utilisateur mis à jour',
+            'deleted' => 'Utilisateur supprimé',
             'search' => [
                 'placeholder' => 'Rechercher un utilisateur...',
                 'all_roles' => 'Tous les rôles',
@@ -437,7 +440,28 @@ return [
             'force_deleted' => 'L\'article a été supprimé définitivement.',
         ],
         'pages' => [
-            'title' => 'Gestion des pages'
+            'title' => 'Pages statiques',
+            'actions' => [
+                'create' => 'Nouvelle page',
+                'edit' => 'Modifier',
+                'delete' => 'Supprimer',
+                'delete_confirm' => 'Supprimer cette page ?',
+            ],
+            'search' => [
+                'placeholder' => 'Rechercher une page...',
+                'filter' => 'Filtrer',
+            ],
+            'table' => [
+                'title' => 'Titre',
+                'slug' => 'Slug',
+                'visibility' => 'Visible',
+                'actions' => 'Actions',
+                'no_pages' => 'Aucune page trouvée.',
+            ],
+            'status' => [
+                'visible' => 'Visible',
+                'hidden' => 'Masquée',
+            ],
         ],
         'exercises' => 'Exercices',
         'access_denied' => 'Accès refusé. Vous devez être administrateur pour accéder à cette page.',

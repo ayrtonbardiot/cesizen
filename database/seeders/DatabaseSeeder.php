@@ -20,6 +20,17 @@ class DatabaseSeeder extends Seeder
             'email_verified_at' => now(),
             'role' => 'admin'
         ]);
+
+        // seed auto compte utilisateur
+        User::create([
+            'email' => 'user@cesizen.ayrtonbardiot.fr',
+            'password' => 'C3s!Z3nUs3r!$36000',
+            'name' => 'Test Utilisateur',
+            'email_verified_at' => now(),
+            'role' => 'utilisateur'
+        ]);
+
+
         // on seed articles, exercices & categories ainsi que les pages statiques
         $this->call([
             BreathingCategorySeeder::class,

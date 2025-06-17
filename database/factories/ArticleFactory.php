@@ -12,40 +12,35 @@ class ArticleFactory extends Factory
 
     public function definition(): array
     {
-        $title = $this->faker->sentence(3);
+        $title = $this->faker->unique()->sentence(6);
         return [
             'title' => $title,
-            'slug' => Str::slug($title),
-            'content' => $this->faker->paragraphs(3, true),
-            'excerpt' => $this->faker->paragraph(),
+            'slug' => Str::slug($title) . '-' . Str::lower(Str::random(5)),
+            'content' => collect($this->faker->paragraphs(4))
+                            ->map(fn($p) => "<p>{$p}</p>")
+                            ->implode("\n"),
+            'image' => null,
             'author' => $this->faker->name(),
-            'image' => 'articles/' . $this->faker->image('storage/app/public/articles', 800, 600, null, false),
-            'is_published' => $this->faker->boolean(80),
-            'published_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
-            'created_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
-            'updated_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
+            'is_published' => true,
+            'published_at' => now(),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 
-    /**
-     * Indicate that the article is published.
-     */
-    public function published(): static
-    {
-        return $this->state(fn (array $attributes) => [
-            'is_published' => true,
-            'published_at' => now(),
-        ]);
-    }
-
-    /**
-     * Indicate that the article is unpublished.
-     */
     public function unpublished(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn () => [
             'is_published' => false,
             'published_at' => null,
         ]);
     }
-} 
+
+    public function published(): static
+    {
+        return $this->state(fn () => [
+            'is_published' => true,
+            'published_at' => now(),
+        ]);
+    }
+}

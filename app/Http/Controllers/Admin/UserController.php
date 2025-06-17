@@ -93,7 +93,7 @@ class UserController extends Controller
         if ($user->id === auth()->id()) {
             return redirect()
                 ->route('admin.users.index')
-                ->with('error', __('messages.admin.users.cannot_delete_self'));
+                ->with('error', __('messages.users.cannot_delete_self'));
         }
 
         $user->delete();

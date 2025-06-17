@@ -50,15 +50,30 @@
         <!-- Mobile menu -->
         <div class="sm:hidden hidden" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1">
+                @auth
                 <a href="{{ route('dashboard') }}" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('dashboard') ? 'bg-nav text-gray-900' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50' }}">
                     {{ __('messages.dashboard.title') }}
                 </a>
+                @endauth
+                <a href="{{ route('articles.index') }}" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('articles.*') ? 'bg-nav text-gray-900' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50' }}">
+                    {{ __('messages.articles.title') }}
+                </a>
+                <a href="{{ route('breathing.index') }}" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('breathing.*') ? 'bg-nav text-gray-900' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50' }}">
+                    {{ __('messages.breathing.title') }}
+                </a>
+                @auth
                 <a href="{{ route('profile.index') }}" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('profile.index') ? 'bg-nav text-gray-900' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50' }}">
                     {{ __('messages.profile.title') }}
                 </a>
+                @if(auth()->user()->isAdmin())
+                <a href="{{ route('admin.dashboard') }}" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('admin.dashboard') ? 'bg-nav text-gray-900' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50' }}">
+                    {{ __('messages.admin.title') }}
+                </a>
+                @endif
                 <a href="{{ route('logout') }}" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('profile.index') ? 'bg-nav text-gray-900' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50' }}">
                     {{ __('messages.auth.logout') }}
                 </a>
+                @endauth
             </div>
         </div>
     </nav>

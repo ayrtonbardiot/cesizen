@@ -9,13 +9,18 @@ use App\Models\Article;
 
 class IndexController extends Controller
 {
-    public function view() {
+    /**
+     * @module Accueil
+     * @description Affiche la page d’accueil avec les derniers exercices et articles, ou redirige vers le dashboard si connecté
+     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
+     */
+    public function view()
+    {
         $user = auth()->user();
-        if($user) {
+        if ($user) {
             return redirect()->route('dashboard');
         }
 
-        // Récupérer 3 exercices de respiration actifs
         $breathingExercises = BreathingExercise::where('is_active', true)
             ->with('category')
             ->latest()

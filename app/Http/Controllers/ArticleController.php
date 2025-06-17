@@ -7,7 +7,9 @@ use App\Models\Article;
 class ArticleController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @module Articles
+     * @description Affiche la liste des articles publiés par date décroissante
+     * @return \Illuminate\View\View
      */
     public function index()
     {
@@ -19,14 +21,16 @@ class ArticleController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @module Articles
+     * @description Affiche le détail d’un article publié, ou 404 si non publié
+     * @return \Illuminate\View\View|\Illuminate\Http\Response
      */
     public function show(Article $article)
     {
         if (!$article->is_published) {
             abort(404);
         }
-        
+
         return view('articles.show', compact('article'));
     }
 }

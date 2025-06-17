@@ -24,11 +24,22 @@ class BreathingExerciseController extends Controller
         'advanced' => 'Avancé'
     ];
 
-    public function view(Request $request) {
+    /**
+     * @module Respiration
+     * @description Affiche la page d'exercice de respiration pour l'utilisateur connecté
+     * @return \Illuminate\View\View
+     */
+    public function view(Request $request)
+    {
         $user = auth()->user();
         return view('breathingexercise', ['user' => $user]);
     }
 
+    /**
+     * @module Respiration
+     * @description Affiche la liste des exercices actifs avec filtrage par catégorie
+     * @return \Illuminate\View\View
+     */
     public function index(Request $request)
     {
         $query = BreathingExercise::query()->where('is_active', true);
@@ -46,6 +57,11 @@ class BreathingExerciseController extends Controller
         ]);
     }
 
+    /**
+     * @module Respiration
+     * @description Affiche le détail d'un exercice actif ou erreur 404 si inactif
+     * @return \Illuminate\View\View
+     */
     public function show(BreathingExercise $exercise)
     {
         if (!$exercise->is_active) {

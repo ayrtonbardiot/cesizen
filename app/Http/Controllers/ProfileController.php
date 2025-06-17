@@ -11,13 +11,23 @@ use Illuminate\Support\Facades\DB;
 
 class ProfileController extends Controller
 {
+    /**
+     * @module Profil
+     * @description Affiche les informations du profil utilisateur connecté
+     * @return \Illuminate\View\View
+     */
     public function view() {
         $user = auth()->user();
         return view('profile', ['user' => $user]);
     }
 
+    /**
+     * @module Profil
+     * @description Met à jour les informations de base de l’utilisateur (nom, email)
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(Request $request) {
-
         $user = auth()->user();
 
         if ($request->email === $user->email && $request->name === $user->name) {
@@ -30,13 +40,17 @@ class ProfileController extends Controller
         ];
 
         $validated = $request->validate($rules);
-
         $user->update($validated);
 
-        //todo: insérer messages traduction
         return back()->with('success', 'Update successfull.');
     }
 
+    /**
+     * @module Profil
+     * @description Met à jour le mot de passe de l’utilisateur
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function updatePassword(Request $request) {
         $user = auth()->user();
 
@@ -50,39 +64,30 @@ class ProfileController extends Controller
         return back()->with('success', 'Password successfully updated');
     }
 
-
+    /**
+     * @module Profil
+     * @description Génère un fichier JSON contenant les données personnelles de l’utilisateur
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse|\Illuminate\Http\RedirectResponse
+     */
     public function downloadPersonalData()
     {
         try {
             $user = auth()->user();
             $breathingSessions = $user->breathingSessions()->get()->toArray();
             $userData = $user->toArray();
-    
-            $fileName = 'cesizen_personaldata.json';
 
-            // on utilise un UUID pour la sécurité
+            $fileName = 'cesizen_personaldata.json';
             $tempPath = 'tmp/' . Str::uuid() . '_' . $fileName;
-    
+
             $data = [
-                // 'user' => [
-                //     'id'         => $user->id,
-                //     'name'       => $user->name,
-                //     'email'      => $user->email,
-                //     'last_login_at' => $user->last_login_at,
-                //     'last_login_ip_address' => $user->last_login_ip_address,
-                //     'created_at' => $user->created_at,
-                //     'updated_at' => $user->updated_at,
-                // ],
                 'user' => $userData,
                 'breathing_sessions' => $breathingSessions
             ];
-    
+
             $json = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-    
             Storage::disk('local')->put($tempPath, $json);
-    
+
             $absolutePath = Storage::disk('local')->path($tempPath);
-    
             return response()->download($absolutePath, $fileName)->deleteFileAfterSend(true);
         } catch (\Throwable $e) {
             report($e);
@@ -90,27 +95,31 @@ class ProfileController extends Controller
         }
     }
 
+    /**
+     * @module Profil
+     * @description Supprime le compte de l’utilisateur (hors administrateur), les tokens et les sessions associées
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function deleteAccount(Request $request) {
         $user = auth()->user();
 
         if ($user->role === 'admin') {
             return redirect()->back()->with('error', 'Un administrateur ne peut pas supprimer son compte.');
         }
-    
-        // deconnexion avant suppression
+
         auth()->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
         DB::table('sessions')->where('user_id', $user->id)->delete();
-    
-        // supprimer tokens api
+
         if (method_exists($user, 'tokens')) {
             $user->tokens()->delete();
         }
-    
+
         $user->delete();
-    
+
         return redirect('/')->with('info', 'Compte supprimé avec succès.');
     }
 }

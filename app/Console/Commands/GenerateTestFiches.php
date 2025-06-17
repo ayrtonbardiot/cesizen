@@ -24,7 +24,6 @@ class GenerateTestFiches extends Command
             ['php', 'artisan', 'test', '--env=testing', '--log-junit=' . $logPath],
             base_path(),
             [
-                // simule environnement "testing"
                 'APP_ENV' => 'testing',
                 'APP_DEBUG' => 'true',
                 'SESSION_DRIVER' => 'array',
@@ -33,7 +32,7 @@ class GenerateTestFiches extends Command
                 'DB_DATABASE' => ':memory:',
             ] + $_ENV 
         );
-        $process->setTty(Process::isTtySupported()); // Active couleurs si dispo
+        $process->setTty(Process::isTtySupported());
         $process->run(function ($type, $buffer) {
             echo $buffer;
         });
@@ -65,6 +64,27 @@ class GenerateTestFiches extends Command
         ];
 
         array_unshift($tests, $summary);
+
+        // PV de recette avec résumé + signature
+        $pvRecette = [
+            'fiche' => 'PV_RECETTE',
+            'projet' => 'CESIZen',
+            'module' => 'Validation finale',
+            'responsable' => 'Équipe CESIZen',
+            'tests' => collect($tests[0]['tests'])->map(function ($test) {
+                return [
+                    'nom' => $test['nom'],
+                    'action' => $test['action'],
+                    'attendu' => $test['attendu'],
+                    'resultat' => $test['resultat'],
+                    'message' => $test['message'],
+                    'signature' => '',
+                    'horodatage' => now()->format('d/m/Y H:i'),
+                ];
+            })->toArray(),
+        ];
+
+        $tests[] = $pvRecette;
 
         $pdf = Pdf::loadView('pdf.fiches', [
             'fiches' => $tests,

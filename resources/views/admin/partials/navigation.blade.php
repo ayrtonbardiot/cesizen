@@ -59,8 +59,8 @@
             <a href="{{ route('admin.articles.index') }}" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('admin.articles.*') ? 'bg-nav text-gray-900' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50' }}">                
                 {{ __('messages.admin.articles.title') }}
             </a>
-            <a href="{{ route('admin.articles.index') }}" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('admin.pages.*') ? 'bg-nav text-gray-900' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50' }}">                
-                {{ __('messages.admin.articles.title') }}
+            <a href="{{ route('admin.pages.index') }}" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('admin.pages.*') ? 'bg-nav text-gray-900' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50' }}">                
+                {{ __('messages.admin.pages.title') }}
             </a>
             <a href="{{ route('dashboard') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">
                 {{ __('messages.navigation.back_to_site') }}

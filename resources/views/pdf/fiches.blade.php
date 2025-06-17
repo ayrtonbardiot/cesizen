@@ -27,6 +27,16 @@
             margin-bottom: 30px;
             table-layout: fixed;
         }
+        table.pv-signature td {
+            width: 33%;
+            vertical-align: top;
+        }
+        table.pv-signature td:nth-child(2) {
+            width: 20%;
+        }
+        table.pv-signature td:nth-child(3) {
+            width: 20%;
+        }
         th, td {
             border: 1px solid #444;
             padding: 5px;
@@ -133,6 +143,56 @@
         <div class="page-break"></div>
     @endif
 @endforeach
+
+<div class="page-break"></div>
+
+<header>
+    <h1>Procès-Verbal de Validation Finale</h1>
+    <p>Rapport généré le {{ $generatedAt }}</p>
+</header>
+
+<p><strong>Nom du projet :</strong> CESIZen</p>
+<p><strong>Équipe responsable :</strong> Équipe CESIZen</p>
+
+<h3>Modules validés :</h3>
+
+<table>
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Nom de la fiche</th>
+            <th>Module</th>
+            <th>Responsable</th>
+            <th>Résultat</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($fiches as $i => $fiche)
+            @if ($fiche['fiche'] !== 'SOMMAIRE' && $fiche['fiche'] !== 'PV_RECETTE')
+                <tr>
+                    <td>{{ $i }}</td>
+                    <td>{{ $fiche['fiche'] }}</td>
+                    <td>{{ $fiche['module'] ?? '—' }}</td>
+                    <td>{{ $fiche['responsable'] ?? '—' }}</td>
+                    <td>
+                        {{ collect($fiche['tests'])->contains(fn($t) => $t['resultat'] === 'Echec') ? 'Echec' : 'Succès' }}
+                    </td>
+                </tr>
+            @endif
+        @endforeach
+    </tbody>
+</table>
+
+<p style="margin-top: 40px;"><strong>Commentaire final :</strong></p>
+<p style="min-height: 80px; border: 1px solid #000; padding: 10px;">&nbsp;</p>
+
+<table class="pv-signature" style="margin-top: 40px;">
+    <tr>
+        <td><strong>Nom du valideur :</strong><br><br>_________________________</td>
+        <td><strong>Date :</strong><br><br>____ / ____ / ______</td>
+        <td><strong>Signature :</strong><br><br>______________________</td>
+    </tr>
+</table>
 
 <footer>
     Page <span class="pagenum"></span>

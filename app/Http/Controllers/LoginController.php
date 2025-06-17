@@ -25,6 +25,6 @@ class LoginController extends Controller
 
     public function logout() {
         auth()->logout();
-        return redirect()->route('index')->with('success', 'Logout successful!');
+        return redirect()->route('index')->with('success', 'Vous êtes déconnectés.');
     }
 }

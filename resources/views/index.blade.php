@@ -11,6 +11,27 @@
 </head>
 <body class="bg-gray-50">
     <main>
+        <div class="fixed top-4 inset-x-0 flex justify-center z-50 px-4 sm:px-6">
+            <div class="w-full max-w-lg space-y-4">
+                @if(session('info'))
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-md shadow-md" role="alert" aria-live="polite">
+                        <p class="text-blue-700">{{ session('info') }}</p>
+                    </div>
+                @endif
+        
+                @if(session('success'))
+                    <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-md shadow-md" role="alert" aria-live="polite">
+                        <p class="text-green-700">{{ session('success') }}</p>
+                    </div>
+                @endif
+        
+                @if(session('error'))
+                    <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-md shadow-md" role="alert" aria-live="polite">
+                        <p class="text-red-700">{{ session('error') }}</p>
+                    </div>
+                @endif
+            </div>
+        </div>
         <!-- Section hero -->
         <section class="min-h-screen bg-nav relative overflow-hidden">
             <div class="absolute inset-0 bg-grid-black/[0.05] bg-[size:60px_60px]"></div>

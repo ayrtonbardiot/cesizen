@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class ProfileController extends Controller
 {
@@ -92,15 +93,24 @@ class ProfileController extends Controller
     public function deleteAccount(Request $request) {
         $user = auth()->user();
 
-        $user->breathingSessions()->delete();
-        $user->delete();
-
-        auth()->logout();
+        if ($user->role === 'admin') {
+            return redirect()->back()->with('error', 'Un administrateur ne peut pas supprimer son compte.');
+        }
     
-        // Invalider la session
+        // deconnexion avant suppression
+        auth()->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+
+        DB::table('sessions')->where('user_id', $user->id)->delete();
     
-        return redirect('/')->with('status', 'Compte supprimé avec succès.');
+        // supprimer tokens api
+        if (method_exists($user, 'tokens')) {
+            $user->tokens()->delete();
+        }
+    
+        $user->delete();
+    
+        return redirect('/')->with('info', 'Compte supprimé avec succès.');
     }
 }

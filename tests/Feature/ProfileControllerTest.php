@@ -8,6 +8,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
+use Illuminate\Support\Facades\DB;
 
 class ProfileControllerTest extends TestCase
 {
@@ -160,5 +161,45 @@ class ProfileControllerTest extends TestCase
 
         $this->assertEquals($user->id, $data['user']['id']);
         $this->assertEquals($user->email, $data['user']['email']);
+    }
+
+        /**
+     * @projet CESIZen
+     * @module Profil
+     * @responsable Équipe CESIZen
+     * @action Un utilisateur normal peut supprimer son compte
+     * @attendu L'utilisateur est supprimé et redirigé vers l'accueil
+     */
+    public function test_user_can_delete_own_account()
+    {
+        $user = User::factory()->create(['role' => 'user']);
+
+        $response = $this->actingAs($user)->delete(route('profile.delete'));
+    
+        $response->assertRedirect('/');
+        $this->assertGuest();
+        $user->refresh();
+        $this->assertEquals(0, DB::table('users')->where('id', $user->id)->count());
+    }
+
+    /**
+     * @projet CESIZen
+     * @module Profil
+     * @responsable Équipe CESIZen
+     * @action Un administrateur ne peut pas supprimer son compte
+     * @attendu L'opération est bloquée avec une erreur et le compte est toujours présent
+     */
+    public function test_admin_cannot_delete_own_account()
+    {
+        $admin = User::factory()->create(['role' => 'admin']);
+
+        $response = $this->actingAs($admin)->delete(route('profile.delete'));
+    
+        $response->assertRedirect();
+        $response->assertSessionHas('error', 'Un administrateur ne peut pas supprimer son compte.');
+    
+        $this->assertDatabaseHas('users', [
+            'id' => $admin->id,
+        ]);
     }
 }

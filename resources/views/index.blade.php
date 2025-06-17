@@ -11,6 +11,27 @@
 </head>
 <body class="bg-gray-50">
     <main>
+        <div class="fixed top-4 inset-x-0 flex justify-center z-50 px-4 sm:px-6">
+            <div class="w-full max-w-lg space-y-4">
+                @if(session('info'))
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-md shadow-md" role="alert" aria-live="polite">
+                        <p class="text-blue-700">{{ session('info') }}</p>
+                    </div>
+                @endif
+        
+                @if(session('success'))
+                    <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-md shadow-md" role="alert" aria-live="polite">
+                        <p class="text-green-700">{{ session('success') }}</p>
+                    </div>
+                @endif
+        
+                @if(session('error'))
+                    <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-md shadow-md" role="alert" aria-live="polite">
+                        <p class="text-red-700">{{ session('error') }}</p>
+                    </div>
+                @endif
+            </div>
+        </div>
         <!-- Section hero -->
         <section class="min-h-screen bg-nav relative overflow-hidden">
             <div class="absolute inset-0 bg-grid-black/[0.05] bg-[size:60px_60px]"></div>
@@ -42,6 +63,65 @@
                     <svg class="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
                     </svg>
+                </div>
+            </div>
+        </section>
+
+        
+
+        <!-- Articles Section -->
+        <section class="py-16 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12" data-aos="fade-up">
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">{{ __('messages.articles.title') }}</h2>
+                    <p class="text-lg sm:text-xl text-gray-700 max-w-2xl mx-auto">{{ __('messages.articles.subtitle') }}</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    @foreach($articles as $article)
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden transform transition duration-300 hover:scale-105">
+                            @if($article->image)
+                                <div class="relative h-48">
+                                    <img src="{{ $article->image_url }}" alt="{{ $article->title }}" class="w-full h-full object-cover">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                                </div>
+                            @endif
+                            <div class="p-6">
+                                <div class="flex items-center text-sm text-gray-500 mb-3">
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                    {{ $article->published_at->format('d/m/Y') }}
+                                    @if($article->author)
+                                        <span class="mx-2">•</span>
+                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                        </svg>
+                                        {{ $article->author }}
+                                    @endif
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-900 mb-3">{{ $article->title }}</h3>
+                                <p class="text-gray-600 mb-4">{{ $article->excerpt }}</p>
+                                <a href="{{ route('articles.show', $article->slug) }}" 
+                                   class="inline-flex items-center text-black transition-colors">
+                                    {{ __('messages.articles.read_more') }}
+                                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+                <div class="text-center mt-12">
+                    <a href="{{ route('articles.index') }}" 
+                    class="inline-flex mt-8 bg-gray-900 text-nav px-8 py-4 rounded-full font-bold hover:bg-gray-800 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    {{ __('messages.articles.view_all') }}
+                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                    </a>
                 </div>
             </div>
         </section>
@@ -89,11 +169,8 @@
 
         <!-- Séparateur -->
         <div class="relative py-12">
-            <div class="absolute inset-0 flex items-center" aria-hidden="true">
-                <div class="w-full border-t border-gray-200"></div>
-            </div>
             <div class="relative flex justify-center">
-                <span class="bg-white px-4 text-gray-500">
+                <span class="px-4 text-gray-500">
                     <svg class="h-8 w-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
                     </svg>

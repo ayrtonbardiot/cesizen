@@ -51,6 +51,7 @@ return [
         'name' => 'Nom',
         'already_registered' => 'Déjà inscrit ?',
         'not_registered' => 'Pas encore inscrit ?',
+        'login_successful' => 'Connexion réussie !'
     ],
 
     // Dashboard
@@ -311,6 +312,9 @@ return [
         'users' => [
             'title' => 'Gestion des utilisateurs',
             'subtitle' => 'Gérez les utilisateurs de votre application',
+            'created' => 'Utilisateur créé !',
+            'updated' => 'Utilisateur mis à jour',
+            'deleted' => 'Utilisateur supprimé',
             'search' => [
                 'placeholder' => 'Rechercher un utilisateur...',
                 'all_roles' => 'Tous les rôles',
@@ -394,6 +398,70 @@ return [
             'created' => 'L\'exercice a été créé avec succès.',
             'updated' => 'L\'exercice a été mis à jour avec succès.',
             'deleted' => 'L\'exercice a été supprimé avec succès.',
+        ],
+        'articles' => [
+            'title' => 'Gestion des articles',
+            'subtitle' => 'Gérez les articles de votre application',
+            'search' => [
+                'placeholder' => 'Rechercher un article...',
+                'all_status' => 'Tous les statuts',
+                'filter' => 'Filtrer',
+            ],
+            'table' => [
+                'title' => 'Titre',
+                'author' => 'Auteur',
+                'published_at' => 'Publié le',
+                'status' => 'Statut',
+                'actions' => 'Actions',
+                'no_articles' => 'Aucun article trouvé',
+            ],
+            'form' => [
+                'title' => 'Titre',
+                'content' => 'Contenu',
+                'image' => 'Image',
+                'author' => 'Auteur',
+                'is_published' => 'Publié',
+            ],
+            'status' => [
+                'published' => 'Publié',
+                'draft' => 'Brouillon',
+            ],
+            'actions' => [
+                'create' => 'Créer un article',
+                'edit' => 'Modifier',
+                'delete' => 'Supprimer',
+                'delete_confirm' => 'Êtes-vous sûr de vouloir supprimer cet article ?',
+                'back_to_list' => 'Retour à la liste',
+            ],
+            'created' => 'L\'article a été créé avec succès.',
+            'updated' => 'L\'article a été mis à jour avec succès.',
+            'deleted' => 'L\'article a été supprimé avec succès.',
+            'restored' => 'L\'article a été restauré avec succès.',
+            'force_deleted' => 'L\'article a été supprimé définitivement.',
+        ],
+        'pages' => [
+            'title' => 'Pages statiques',
+            'actions' => [
+                'create' => 'Nouvelle page',
+                'edit' => 'Modifier',
+                'delete' => 'Supprimer',
+                'delete_confirm' => 'Supprimer cette page ?',
+            ],
+            'search' => [
+                'placeholder' => 'Rechercher une page...',
+                'filter' => 'Filtrer',
+            ],
+            'table' => [
+                'title' => 'Titre',
+                'slug' => 'Slug',
+                'visibility' => 'Visible',
+                'actions' => 'Actions',
+                'no_pages' => 'Aucune page trouvée.',
+            ],
+            'status' => [
+                'visible' => 'Visible',
+                'hidden' => 'Masquée',
+            ],
         ],
         'exercises' => 'Exercices',
         'access_denied' => 'Accès refusé. Vous devez être administrateur pour accéder à cette page.',
@@ -555,6 +623,49 @@ return [
             'edit' => 'Modifier',
             'cancel' => 'Annuler',
             'select' => 'Sélectionner',
+        ],
+    ],
+
+    // Articles
+    'articles' => [
+        'title' => 'Articles',
+        'subtitle' => 'Nos articles sont disponibles gratuitement pour en apprendre plus sur la santé mentale et ses enjeux',
+        'read_more' => 'Lire la suite',
+        'no_articles' => 'Aucun article disponible pour le moment.',
+        'published_on' => 'Publié le',
+        'by' => 'par',
+        'back_to_articles' => 'Retour aux articles',
+        'view_all' => 'Voir tous les articles',
+        'management' => 'Gestion des articles',
+        'create' => 'Créer un article',
+        'edit' => 'Modifier l\'article',
+        'list' => 'Liste des articles',
+        'form' => [
+            'title' => 'Titre',
+            'content' => 'Contenu',
+            'author' => 'Auteur',
+            'image' => 'Image',
+            'is_published' => 'Publier l\'article',
+            'published_at' => 'Date de publication',
+            'submit' => 'Enregistrer',
+            'update' => 'Mettre à jour',
+            'delete' => 'Supprimer',
+            'delete_confirm' => 'Êtes-vous sûr de vouloir supprimer cet article ?',
+        ],
+        'messages' => [
+            'created' => 'Article créé avec succès.',
+            'updated' => 'Article mis à jour avec succès.',
+            'deleted' => 'Article supprimé avec succès.',
+        ],
+        'actions' => [
+            'create' => 'Créer un article',
+            'edit' => 'Modifier',
+            'delete' => 'Supprimer',
+            'view' => 'Voir',
+        ],
+        'status' => [
+            'published' => 'Publié',
+            'draft' => 'Brouillon',
         ],
     ],
 ];

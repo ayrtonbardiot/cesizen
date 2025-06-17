@@ -9,12 +9,22 @@ use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-    public function view() {
+    /**
+     * @module Tableau de bord
+     * @description Affiche le tableau de bord de l’utilisateur avec ses statistiques de respiration
+     * @return \Illuminate\View\View
+     */
+    public function view()
+    {
         $user = Auth::user();
 
         $breathingTotal = $user->breathingSessions()->count();
         $currentStreak = $user->currentBreathingStreak();
 
-        return view('dashboard', ['user' => $user, 'breathingTotal' => $breathingTotal, 'currentStreak' => $currentStreak]);
+        return view('dashboard', [
+            'user' => $user,
+            'breathingTotal' => $breathingTotal,
+            'currentStreak' => $currentStreak
+        ]);
     }
 }

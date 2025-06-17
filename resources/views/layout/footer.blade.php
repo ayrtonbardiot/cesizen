@@ -5,10 +5,10 @@
                     <p class="text-sm sm:text-base text-gray-400">{{ __('messages.footer.copyright') }}</p>
                 </div>
                 <div class="flex gap-4 sm:gap-8">
-                    <a href="#" class="text-sm sm:text-base text-gray-400 hover:text-nav transition-colors duration-300">{{ __('messages.footer.about') }}</a>
-                    <a href="#" class="text-sm sm:text-base text-gray-400 hover:text-nav transition-colors duration-300">{{ __('messages.footer.contact') }}</a>
-                    <a href="#" class="text-sm sm:text-base text-gray-400 hover:text-nav transition-colors duration-300">{{ __('messages.footer.terms') }}</a>
-                    <a href="#" class="text-sm sm:text-base text-gray-400 hover:text-nav transition-colors duration-300">{{ __('messages.footer.privacy') }}</a>
+                    <a href="{{ route('pages.show', 'a-propos') }}" class="text-sm sm:text-base text-gray-400 hover:text-nav transition-colors duration-300">{{ __('messages.footer.about') }}</a>
+                    <a href="{{ route('pages.show', 'contact') }}" class="text-sm sm:text-base text-gray-400 hover:text-nav transition-colors duration-300">{{ __('messages.footer.contact') }}</a>
+                    <a href="{{ route('pages.show', 'conditions-utilisation') }}" class="text-sm sm:text-base text-gray-400 hover:text-nav transition-colors duration-300">{{ __('messages.footer.terms') }}</a>
+                    <a href="{{ route('pages.show', 'politique-confidentialite') }}" class="text-sm sm:text-base text-gray-400 hover:text-nav transition-colors duration-300">{{ __('messages.footer.privacy') }}</a>
                 </div>
             </div>
         </div>

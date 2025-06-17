@@ -10,11 +10,22 @@ use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
+    /**
+     * @module Authentification
+     * @description Affiche la page d'inscription
+     * @return \Illuminate\View\View
+     */
     public function view()
     {
         return view('auth.register');
     }
 
+    /**
+     * @module Authentification
+     * @description Enregistre un nouvel utilisateur, déclenche l’email de vérification et connecte l'utilisateur
+     * @param Request $request Les données de la requête d’inscription (nom, email, mot de passe)
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function register(Request $request)
     {
         $request->validate([
@@ -29,7 +40,6 @@ class RegisterController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        // lancer l'email de vérification
         event(new Registered($user));
 
         Auth::login($user);

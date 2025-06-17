@@ -29,6 +29,12 @@ Elle propose des outils interactifs tels que des exercices de respiration, des m
 
 ---
 
+## ✅ Résultats des derniers tests
+
+[Voir le PDF](./FICHES-TESTS_LAST.pdf)
+
+---
+
 ## 📦 Installation locale
 
 ```bash

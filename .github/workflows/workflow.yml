@@ -29,6 +29,11 @@ jobs:
           php artisan key:generate
           touch database/database.sqlite
 
+      - name: ⚙️ Build assets (Vite)
+        run: |
+            npm install
+            npm run build
+
       - name: 🧪 Exécuter les tests avec PDF
         run: php artisan tests:generate-fiches --output=report/FICHES-TESTS.pdf
 

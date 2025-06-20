@@ -28,7 +28,6 @@ jobs:
           cp .env.example .env
           php artisan key:generate
           touch database/database.sqlite
-          php artisan migrate --env=testing --force
 
       - name: 🧪 Exécuter les tests avec PDF
         run: php artisan tests:generate-fiches --output=report/FICHES-TESTS.pdf

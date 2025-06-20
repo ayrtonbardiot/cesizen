@@ -1,0 +1,91 @@
+name: CI/CD Laravel
+
+on:
+  push:
+    branches:
+      - dev
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v3
+
+      - name: 🧰 Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, bcmath, pdo, sqlite, dom
+
+      - name: 📦 Composer install
+        run: composer install --no-progress --prefer-dist
+
+      - name: ⚙️ Préparer environnement Laravel
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+          touch database/database.sqlite
+
+      - name: ⚙️ Build assets (Vite)
+        run: |
+            npm install
+            npm run build
+
+      - name: 🧪 Exécuter les tests avec PDF
+        run: php artisan tests:generate-fiches --output=report/FICHES-TESTS.pdf
+
+      - name: 📤 Upload rapport de tests
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: report/FICHES-TESTS.pdf
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v3
+
+      - name: 🔐 Setup SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: 📦 Composer install (local pour build)
+        run: composer install --no-dev --prefer-dist
+
+      - name: ⚙️ NPM install & build
+        run: |
+          npm install
+          npm run build
+
+      - name: 🚀 Transférer le projet (rsync via .gitignore)
+        run: |
+          rsync -az --delete \
+            --exclude-from=.gitignore \
+            --exclude=".git" \
+            --exclude=".env" \
+            ./ ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:${{ secrets.DEPLOY_PATH }}
+
+      - name: 🛠️ Générer le fichier .env sur le serveur
+        run: |
+          ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
+            echo "${{ secrets.ENV_PROD }}" > ${{ secrets.DEPLOY_PATH }}/.env
+          EOF
+
+      - name: 🧰 Commandes post-déploiement Laravel
+        run: |
+          ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
+            cd ${{ secrets.DEPLOY_PATH }}
+            composer install --no-dev --prefer-dist
+            php artisan migrate --force
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache
+          EOF
